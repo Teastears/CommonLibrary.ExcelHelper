@@ -1,0 +1,607 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CommonLibrary.ExcelHelper</name>
+    </assembly>
+    <members>
+        <member name="M:CommonLibrary.ExcelHelper.Base.ExcelBase.ColumnWidth(System.Int32)">
+            <summary>
+            计算列宽
+            </summary>
+            <param name="Width">要设置的列宽，单位字符</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Base.ExcelBase.GetVersion(System.String)">
+            <summary>
+            判断是否为2007以前格式
+            </summary>
+            <param name="filePath"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Enum.ExcelVersion">
+            <summary>
+            Excel版本
+            </summary>
+        </member>
+        <member name="F:CommonLibrary.ExcelHelper.Enum.ExcelVersion.XLS">
+            <summary>
+            2007以前版本
+            </summary>
+        </member>
+        <member name="F:CommonLibrary.ExcelHelper.Enum.ExcelVersion.XLSX">
+            <summary>
+            2007及以后版本
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.ExcelHelperFactory">
+            <summary>
+            Excel导入操出类创建工厂
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExcelHelperFactory.CreateExporter(System.Data.DataSet,CommonLibrary.ExcelHelper.Enum.ExcelVersion,System.Collections.Generic.List{System.String})">
+            <summary>
+            创建导出处理对象
+            </summary>
+            <param name="SourceData">数据源</param>
+            <param name="ExcelVersion">导出数据的Excel版本</param>
+            <param name="SheetName">工作表名称列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExcelHelperFactory.CreateExporter(System.Data.DataSet,System.Collections.Generic.List{System.String})">
+            <summary>
+            创建导出处理对象
+            </summary>
+            <param name="SourceData">数据源</param>
+            <param name="SheetName">工作表名称列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExcelHelperFactory.CreateExporter(System.Data.DataTable,CommonLibrary.ExcelHelper.Enum.ExcelVersion,System.String)">
+            <summary>
+            创建导出处理对象
+            </summary>
+            <param name="SourceData">数据源</param>
+            <param name="ExcelVersion">导出数据的Excel版本</param>
+            <param name="SheetName">工作表名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExcelHelperFactory.CreateExporter(System.Data.DataTable,System.String)">
+            <summary>
+            创建导出处理对象
+            </summary>
+            <param name="SourceData">数据源</param>
+            <param name="SheetName">工作表名称列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExcelHelperFactory.CreateExporter``1(System.Collections.Generic.IEnumerable{``0},CommonLibrary.ExcelHelper.Enum.ExcelVersion,System.String)">
+            <summary>
+            创建导出处理对象
+            </summary>
+            <param name="SourceData">数据源</param>
+            <param name="ExcelVersion">导出数据的Excel版本</param>
+            <param name="SheetName">工作表名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExcelHelperFactory.CreateExporter``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            创建导出处理对象
+            </summary>
+            <param name="SourceData">数据源</param>
+            <param name="SheetName">工作表名称列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExcelHelperFactory.CreateImporter(System.String,System.Collections.Generic.List{CommonLibrary.ExcelHelper.Model.ImportSheetSetting})">
+            <summary>
+            创建导入处理对象
+            </summary>
+            <param name="DataSourceFilePath">要导入的Excel文件路径</param>
+            <param name="ImportSheets">导入配置列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExcelHelperFactory.CreateImporter(System.IO.Stream,System.Collections.Generic.List{CommonLibrary.ExcelHelper.Model.ImportSheetSetting})">
+            <summary>
+            创建导入处理对象
+            </summary>
+            <param name="DataSource">要导入的Excel文件流</param>
+            <param name="ImportSheets">导入配置列表</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.ExportStyle.DefaultStyle">
+            <summary>
+            默认样式
+            </summary>
+            <remarks>
+            <para>此默认样式</para>
+            <para>所有列宽均为8字符宽度</para>
+            <para>数据表表头单元格设置为灰色(#C0C0C0)背景,细实线边框</para>
+            <para>数据表内容单元格样式无背景颜色,细实线边框</para>
+            </remarks>
+        </member>
+        <member name="F:CommonLibrary.ExcelHelper.ExportStyle.DefaultStyle._CreateNewStyle">
+            <summary>
+            创建新样式对象代理
+            </summary>
+        </member>
+        <member name="F:CommonLibrary.ExcelHelper.ExportStyle.DefaultStyle.BodyStyle">
+            <summary>
+            数据表内容单元格样式
+            </summary>
+        </member>
+        <member name="F:CommonLibrary.ExcelHelper.ExportStyle.DefaultStyle.HeaderStyle">
+            <summary>
+            数据表表头单元格样式
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.ExportStyle.DefaultStyle.CreateNewStyle">
+            <summary>
+            创建新样式对象代理
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExportStyle.DefaultStyle.GetCellStyle(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            获取数据表内容单元格样式
+            </summary>
+            <param name="SheetIndex">工作表索引号，从0开始</param>
+            <param name="ColumnIndex">列索引号，从0开始</param>
+            <param name="RowIndex">行号，从0开始</param>
+            <returns></returns>
+            <remarks>不包括表头，计算行号时也不计算表头</remarks>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExportStyle.DefaultStyle.GetColumnWidth(System.Int32,System.Int32)">
+            <summary>
+            获取列宽
+            </summary>
+            <param name="SheetIndex">工作表索引号，从0开始</param>
+            <param name="ColumnIndex">列索引号，从0开始</param>
+            <returns>字符数量</returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExportStyle.DefaultStyle.GetHeaderStyle(System.Int32,System.Int32)">
+            <summary>
+            获取数据表表头单元格样式
+            </summary>
+            <param name="SheetIndex">工作表索引号，从0开始</param>
+            <param name="ColumnIndex">列索引号，从0开始</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.ExportStyle.IExportStyle">
+            <summary>
+            导出样式
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.ExportStyle.IExportStyle.CreateNewStyle">
+            <summary>
+            创建新样式对象代理
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExportStyle.IExportStyle.GetCellStyle(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            获取数据表内容单元格样式
+            </summary>
+            <param name="SheetIndex">工作表索引号，从0开始</param>
+            <param name="ColumnIndex">列索引号，从0开始</param>
+            <param name="RowIndex">行号，从0开始</param>
+            <returns></returns>
+            <remarks>不包括表头，计算行号时也不计算表头</remarks>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExportStyle.IExportStyle.GetColumnWidth(System.Int32,System.Int32)">
+            <summary>
+            获取列宽
+            </summary>
+            <param name="SheetIndex">工作表索引号，从0开始</param>
+            <param name="ColumnIndex">列索引号，从0开始</param>
+            <returns>字符数量</returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.ExportStyle.IExportStyle.GetHeaderStyle(System.Int32,System.Int32)">
+            <summary>
+            获取数据表表头单元格样式
+            </summary>
+            <param name="SheetIndex">工作表索引号，从0开始</param>
+            <param name="ColumnIndex">列索引号，从0开始</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Export.AbstractExcelExporter">
+            <summary>
+            导出操作抽象类
+            </summary>
+        </member>
+        <member name="F:CommonLibrary.ExcelHelper.Export.AbstractExcelExporter.Workbook">
+            <summary>
+            工作簿
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Export.AbstractExcelExporter.ExcelVersion">
+            <summary>
+            Excel版本
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.AbstractExcelExporter.CreateWorkbook">
+            <summary>
+            创建工作薄
+            </summary> 
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.AbstractExcelExporter.DataCheck">
+            <summary>
+            数据验证
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.AbstractExcelExporter.SetCellValue(NPOI.SS.UserModel.ICell,System.Object)">
+            <summary>
+            设置单元格的值
+            </summary>
+            <param name="cell">要设置的单元格</param>
+            <param name="obj">值对象</param>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.AbstractExcelExporter.CreateNewStyle">
+            <summary>
+            创建新的单元格样式对象
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.AbstractExcelExporter.ExportToFile(System.String,CommonLibrary.ExcelHelper.ExportStyle.IExportStyle)">
+            <summary>
+            导出到文件
+            </summary>
+            <param name="ExportFilePath">导出文件路径</param>
+            <param name="ExportStyle">导出时应用的样式</param>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.AbstractExcelExporter.ExportToStream(CommonLibrary.ExcelHelper.ExportStyle.IExportStyle)">
+            <summary>
+            导出到内存流
+            </summary>
+            <param name="ExportStyle">导出时应用的样式</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Export.DataSetExporter">
+            <summary>
+            DataSet导出处理类
+            </summary>
+        </member>
+        <member name="F:CommonLibrary.ExcelHelper.Export.DataSetExporter._SheetName">
+            <summary>
+            工作表名称列表
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.DataSetExporter.DataCheck">
+            <summary>
+            数据验证
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.DataSetExporter.InitHeaderNames">
+            <summary>
+            初始化表头显示名称
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.DataSetExporter.InitSheetName">
+            <summary>
+            初始化工作表名称列表
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Export.DataSetExporter.HeaderNames">
+            <summary>
+            导出后的表头显示配置
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Export.DataSetExporter.SheetName">
+            <summary>
+            工作表名称列表
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Export.DataSetExporter.SourceData">
+            <summary>
+            要导出的数据源
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.DataSetExporter.ExportToStream(CommonLibrary.ExcelHelper.ExportStyle.IExportStyle)">
+            <summary>
+            导出到内存流
+            </summary>
+            <param name="ExportStyle">导出时应用的样式</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Export.DataTableExporter">
+            <summary>
+            DataTable导出处理类
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.DataTableExporter.DataCheck">
+            <summary>
+            数据验证
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.DataTableExporter.InitHeaderNames">
+            <summary>
+            初始化表头显示名称
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.DataTableExporter.InitSheetName">
+            <summary>
+            初始化工作表名称列表
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Export.DataTableExporter.HeaderNames">
+            <summary>
+            导出后的表头显示配置
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Export.DataTableExporter.SheetName">
+            <summary>
+            工作表名称
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Export.DataTableExporter.SourceData">
+            <summary>
+            要导出的数据源
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.DataTableExporter.ExportToStream(CommonLibrary.ExcelHelper.ExportStyle.IExportStyle)">
+            <summary>
+            导出到内存流
+            </summary>
+            <param name="ExportStyle">导出时应用的样式</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Export.IEnumerableExporter`1">
+            <summary>
+            IEnumerable&lt;T&gt;导出处理类
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.IEnumerableExporter`1.DataCheck">
+            <summary>
+            数据验证
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.IEnumerableExporter`1.InitHeaderNames">
+            <summary>
+            初始化表头显示名称
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.IEnumerableExporter`1.InitSheetName">
+            <summary>
+            初始化工作表名称列表
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Export.IEnumerableExporter`1.HeaderNames">
+            <summary>
+            导出后的表头显示配置
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Export.IEnumerableExporter`1.SheetName">
+            <summary>
+            工作表名称
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Export.IEnumerableExporter`1.SourceData">
+            <summary>
+            要导出的数据源
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.IEnumerableExporter`1.ExportToStream(CommonLibrary.ExcelHelper.ExportStyle.IExportStyle)">
+            <summary>
+            导出到内存流
+            </summary>
+            <param name="ExportStyle">导出时应用的样式</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Export.IExcelExporter">
+            <summary>
+            导出Excel接口
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.IExcelExporter.ExportToFile(System.String,CommonLibrary.ExcelHelper.ExportStyle.IExportStyle)">
+            <summary>
+            导出到文件
+            </summary>
+            <param name="ExportFilePath">导出文件路径</param>
+            <param name="ExportStyle">导出时应用的样式</param>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Export.IExcelExporter.ExportToStream(CommonLibrary.ExcelHelper.ExportStyle.IExportStyle)">
+            <summary>
+            导出到内存流
+            </summary>
+            <param name="ExportStyle">导出时应用的样式</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Import.ExcelFileImporter">
+            <summary>
+            文件导入处理类
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.ExcelFileImporter.CreateWorkbook">
+            <summary>
+            创建工作簿(依据文件流)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.ExcelFileImporter.ReadFile">
+            <summary>
+            读取文件到文件流
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Import.ExcelFileImporter.DataSourceFilePath">
+            <summary>
+            要导入的数据源文件路径
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.ExcelFileImporter.Dispose">
+            <summary>
+            释放
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter">
+            <summary>
+            Excel文件流导入处理类
+            </summary>
+        </member>
+        <member name="F:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.WorkBook">
+            <summary>
+            根据要导入的数据源创建的工作簿
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.CreateWorkbook">
+            <summary>
+            创建工作簿(依据文件流)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.GetDataListFromSheet``1(NPOI.SS.UserModel.ISheet,System.Int32)">
+            <summary>
+            从工作表中生成List
+            </summary>
+            <param name="sheet">工作表</param>
+            <param name="headerRowIndex">表头行号</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.GetDataTableFromSheet(NPOI.SS.UserModel.ISheet,System.Int32)">
+            <summary>
+            从工作表中生成DataTable
+            </summary>
+            <param name="sheet">工作表</param>
+            <param name="headerRowIndex">表头行号</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.InitImportSheets">
+            <summary>
+            初始化导入配置
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.ExcelVersion">
+            <summary>
+            Excel版本，默认为XLSX
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.ImportData">
+            <summary>
+            导入的数据
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.ImportSheets">
+            <summary>
+            要导入的数据源导入配置列表
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.SourceData">
+            <summary>
+            要导入的数据源
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.Dispose">
+            <summary>
+            释放
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.Import">
+            <summary>
+            导入数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.ExcelStreamImporter.Import``1">
+            <summary>
+            导入数据
+            </summary>
+            <typeparam name="T">数据类型</typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Import.IExcelImporter">
+            <summary>
+            导入Excel接口
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.IExcelImporter.Import">
+            <summary>
+            导入数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Import.IExcelImporter.Import``1">
+            <summary>
+            导入数据
+            </summary>
+            <typeparam name="T">数据类型</typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Model.Exception.EmptyPathException">
+            <summary>
+            导出目标文件路径为空
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Model.Exception.EmptyPathException.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Model.Exception.NoDataException">
+            <summary>
+            数据为空
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Model.Exception.NoDataException.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Model.Exception.UnSupportedTypeException">
+            <summary>
+            不支持的文件类型
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Model.Exception.UnSupportedTypeException.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Model.ImportSheetSetting">
+            <summary>
+            导入配置类
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Model.ImportSheetSetting.#ctor(System.Int32,System.Int32)">
+            <summary>
+            导入配置类构造函数
+            </summary>
+            <param name="SheetIndex">工作表索引序号，从0开始</param>
+            <param name="HeaderRowIndex">导入数据表表头行号，从0开始</param>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Model.ImportSheetSetting.#ctor(System.String,System.Int32)">
+            <summary>
+            导入配置类构造函数
+            </summary>
+            <param name="SheetName">工作表名称</param>
+            <param name="HeaderRowIndex">导入数据表表头行号，从0开始</param>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Model.ImportSheetSetting.HeaderRowIndex">
+            <summary>
+            导入数据表表头行号
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Model.ImportSheetSetting.SheetIndex">
+            <summary>
+            工作表索引序号
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Model.ImportSheetSetting.SheetName">
+            <summary>
+            工作表名称
+            </summary>
+        </member>
+        <member name="T:CommonLibrary.ExcelHelper.Model.NPOIMemoryStream">
+            <summary>
+            NPOI专用内存流
+            </summary>
+        </member>
+        <member name="P:CommonLibrary.ExcelHelper.Model.NPOIMemoryStream.AllowClose">
+            <summary>
+            是否允许关闭
+            </summary>
+        </member>
+        <member name="M:CommonLibrary.ExcelHelper.Model.NPOIMemoryStream.Close">
+            <summary>
+            重写关闭操作
+            </summary>
+        </member>
+    </members>
+</doc>

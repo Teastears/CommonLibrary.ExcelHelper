@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLibrary.ExcelHelper", "CommonLibrary.ExcelHelper\CommonLibrary.ExcelHelper.csproj", "{5A4C98AF-7BFB-49DB-8BC8-C5CCAB8CE3A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLibrary.ExcelHelper.Demo", "CommonLibrary.ExcelHelper.Demo\CommonLibrary.ExcelHelper.Demo.csproj", "{CC941C62-62E9-4347-B141-EA7E9A0F8A9C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A4C98AF-7BFB-49DB-8BC8-C5CCAB8CE3A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4C98AF-7BFB-49DB-8BC8-C5CCAB8CE3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4C98AF-7BFB-49DB-8BC8-C5CCAB8CE3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4C98AF-7BFB-49DB-8BC8-C5CCAB8CE3A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC941C62-62E9-4347-B141-EA7E9A0F8A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC941C62-62E9-4347-B141-EA7E9A0F8A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC941C62-62E9-4347-B141-EA7E9A0F8A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC941C62-62E9-4347-B141-EA7E9A0F8A9C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0E9A5CB-0B20-4BAD-87AA-3FC13AFADF91}
+	EndGlobalSection
+EndGlobal

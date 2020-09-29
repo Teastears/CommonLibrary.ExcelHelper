@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>kang</Authors>
+    <Description>基于NPOI封装的Excel导入和导出相关操作。
+支持从DataSet、DataTable，IEnumerable&lt;T&gt;导出成Stream或文件，
+支持导出时配置格式
+支持从Excel直接导入DataSet、List&lt;T&gt;</Description>
+    <Version>1.0.5</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Users\康\Desktop\CommonLibrary\CommonLibrary.ExcelHelper\CommonLibrary.ExcelHelper\CommonLibrary.ExcelHelper.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NPOI" Version="2.5.1" />
+  </ItemGroup>
+
+</Project>
