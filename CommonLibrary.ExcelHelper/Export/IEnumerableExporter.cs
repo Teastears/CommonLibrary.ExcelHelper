@@ -54,6 +54,10 @@ namespace CommonLibrary.ExcelHelper.Export
         /// 导出后的表头显示配置
         /// </summary>
         public List<KeyValuePair<string, string>> HeaderNames { get; set; }
+        /// <summary>
+        /// 导出数据时的数据提供者
+        /// </summary>
+        public Func<string, T, object> ValueProvidor { get; set; }
 
         /// <summary>
         /// 工作表名称
@@ -75,6 +79,8 @@ namespace CommonLibrary.ExcelHelper.Export
             DataCheck();
             InitSheetName();
             InitHeaderNames();
+            if (ValueProvidor == null)
+                ValueProvidor = DefaultValueProvidor;
             CreateWorkbook();
             if (ExportStyle != null)
                 ExportStyle.CreateNewStyle = Workbook.CreateCellStyle;
@@ -91,14 +97,13 @@ namespace CommonLibrary.ExcelHelper.Export
                     cell.CellStyle = ExportStyle.GetHeaderStyle(0, i);
             }
 
-            Type t = typeof(T);
             int rowIndex = 1;
             foreach (T item in SourceData)
             {
                 IRow dataRow = sheet.CreateRow(rowIndex);
                 for (int n = 0; n < HeaderNames.Count; n++)
                 {
-                    object pValue = t.GetProperty(HeaderNames[n].Key).GetValue(item, null);
+                    object pValue = ValueProvidor(HeaderNames[n].Key, item);
                     var cell = dataRow.CreateCell(n);
                     SetCellValue(cell, pValue);
                     if (ExportStyle != null)
@@ -114,6 +119,13 @@ namespace CommonLibrary.ExcelHelper.Export
             Workbook.Close();
             Stream.AllowClose = true;
             return Stream;
+        }
+
+        private object DefaultValueProvidor(string PropertyKey, T obj)
+        {
+            Type t = typeof(T);
+            object pValue = t.GetProperty(PropertyKey).GetValue(obj, null);
+            return pValue;
         }
     }
 }

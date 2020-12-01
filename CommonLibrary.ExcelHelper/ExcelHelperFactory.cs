@@ -2,6 +2,7 @@
 using CommonLibrary.ExcelHelper.Export;
 using CommonLibrary.ExcelHelper.Import;
 using CommonLibrary.ExcelHelper.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -77,14 +78,16 @@ namespace CommonLibrary.ExcelHelper
         /// <param name="SourceData">数据源</param>
         /// <param name="ExcelVersion">导出数据的Excel版本</param>
         /// <param name="SheetName">工作表名称</param>
+        /// <param name="ValueProvidor">导出数据时的数据提供者</param>
         /// <returns></returns>
-        public static IEnumerableExporter<T> CreateExporter<T>(IEnumerable<T> SourceData, ExcelVersion ExcelVersion = ExcelVersion.XLSX, string SheetName = "")
+        public static IEnumerableExporter<T> CreateExporter<T>(IEnumerable<T> SourceData, ExcelVersion ExcelVersion = ExcelVersion.XLSX, string SheetName = "", Func<string, T, object> ValueProvidor = null)
         {
             var Helper = new IEnumerableExporter<T>
             {
                 SourceData = SourceData,
                 ExcelVersion = ExcelVersion,
-                SheetName = SheetName
+                SheetName = SheetName,
+                ValueProvidor = ValueProvidor
             };
             return Helper;
         }
