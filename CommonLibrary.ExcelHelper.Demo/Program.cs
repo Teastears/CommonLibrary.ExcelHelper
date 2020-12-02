@@ -11,13 +11,48 @@ namespace CommonLibrary.ExcelHelper.Demo
     {
         private static DataSet dataSet;
         private static List<Person> list;
+        private static List<Transport> list2;
         private static void Main()
         {
             CreateDemoData();//创建示例数据
+            CreateDemoData2();//创建示例数据
             {//导出示例，数据源是List<T>，并且自定义导出文件的工作表名称，工作表设置样式
                 var helper = ExcelHelperFactory.CreateExporter(list, Enum.ExcelVersion.XLSX, "列表导出测试");
                 //var stream = helper.ExportToStream(new DefaultStyle());//导出到流
                 helper.ExportToFile(@"..\test1.xlsx", new DefaultStyle());//导出到文件
+            }
+            Thread.Sleep(1000);
+            {//导出示例，数据源是List<T>，且类型T是复杂类型。并且自定义导出文件的工作表名称，工作表设置样式
+                var helper = ExcelHelperFactory.CreateExporter(list2, Enum.ExcelVersion.XLSX, "列表导出测试");
+                helper.HeaderNames = new List<KeyValuePair<string, string>>() {
+                    new KeyValuePair<string, string>("Person.ID","司机编号"),
+                    new KeyValuePair<string, string>("Person.Name","司机姓名"),
+                    new KeyValuePair<string, string>("Person.IDCard","司机身份证"),
+                    new KeyValuePair<string, string>("Person.Age","司机年龄"),
+                    new KeyValuePair<string, string>("Truck.ID","车辆编号"),
+                    new KeyValuePair<string, string>("Truck.Brand","车辆品牌"),
+                    new KeyValuePair<string, string>("Truck.Load","车辆载重"),
+                };
+                helper.ValueProvidor = (Key, item) => {
+                    var array = Key.Split('.');
+
+                    if (array[0] == "Person")
+                    {
+                        Type t = item.Driver.GetType();
+                        object pValue = t.GetProperty(array[1]).GetValue(item.Driver, null);
+                        return pValue;
+                    }
+                    else if (array[0] == "Truck")
+                    {
+                        Type t = item.Truck.GetType();
+                        object pValue = t.GetProperty(array[1]).GetValue(item.Truck, null);
+                        return pValue;
+                    }
+                    else
+                        return null;
+                };
+                //var stream = helper.ExportToStream(new DefaultStyle());//导出到流
+                helper.ExportToFile(@"..\test1_1.xlsx", new DefaultStyle());//导出到文件
             }
             Thread.Sleep(1000);
             {//导出示例，数据源是DataSet
@@ -104,7 +139,35 @@ namespace CommonLibrary.ExcelHelper.Demo
             CreatTableWithData(5);
             CreatTableWithData(10);
         }
+        private static void CreateDemoData2()
+        {
+            list2 = new List<Transport>() {
+                new Transport(){
+                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
+                    Truck=new Truck(){ ID=1, Brand="奔驰", Load="50吨" }
+                },
+                new Transport(){
+                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
+                    Truck=new Truck(){ ID=1, Brand="奔驰", Load="50吨" }
+                },
+                new Transport(){
+                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
+                    Truck=new Truck(){ ID=1, Brand="奔驰", Load="50吨" }
+                },
+                new Transport(){
+                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
+                    Truck=new Truck(){ ID=1, Brand="奔驰", Load="50吨" }
+                },
+                new Transport(){
+                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
+                    Truck=new Truck(){ ID=1, Brand="奔驰", Load="50吨" }
+                }
+            };
 
+            dataSet = new DataSet();
+            CreatTableWithData(5);
+            CreatTableWithData(10);
+        }
         private static void CreatTableWithData(int count)
         {
             DataTable table = new DataTable();
@@ -154,5 +217,21 @@ namespace CommonLibrary.ExcelHelper.Demo
         public string IDCard { get; set; }
 
         public int? Age { get; set; }
+    }
+
+    internal class Truck
+    {
+        public int ID { get; set; }
+
+        public string Brand { get; set; }
+
+        public string Load { get; set; }
+    }
+
+    internal class Transport
+    {
+        public Person Driver { get; set; }
+
+        public Truck Truck { get; set; }
     }
 }
