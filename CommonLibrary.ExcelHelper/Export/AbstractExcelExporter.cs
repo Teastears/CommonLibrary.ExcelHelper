@@ -134,6 +134,16 @@ namespace CommonLibrary.ExcelHelper.Export
         {
             return Workbook.CreateCellStyle();
         }
+        /// <summary>
+        /// 创建单元格数据格式
+        /// </summary>
+        /// <param name="FormatStr"></param>
+        /// <returns></returns>
+        public short CreateNewDataFormat(string FormatStr)
+        {
+            var Format = Workbook.CreateDataFormat();
+            return Format.GetFormat(FormatStr);
+        }
 
         /// <summary>
         /// 导出到文件

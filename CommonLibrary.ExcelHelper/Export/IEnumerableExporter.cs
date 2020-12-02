@@ -83,7 +83,10 @@ namespace CommonLibrary.ExcelHelper.Export
                 ValueProvidor = DefaultValueProvidor;
             CreateWorkbook();
             if (ExportStyle != null)
-                ExportStyle.CreateNewStyle = Workbook.CreateCellStyle;
+            {
+                ExportStyle.CreateNewStyle = CreateNewStyle;
+                ExportStyle.CreateNewDataFormat = CreateNewDataFormat;
+            }
             ISheet sheet = Workbook.CreateSheet(SheetName);
             IRow headerRow = sheet.CreateRow(0);
 

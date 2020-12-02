@@ -15,11 +15,6 @@ namespace CommonLibrary.ExcelHelper.ExportStyle
     public class DefaultStyle : IExportStyle
     {
         /// <summary>
-        /// 创建新样式对象代理
-        /// </summary>
-        protected Func<ICellStyle> _CreateNewStyle;
-
-        /// <summary>
         /// 数据表内容单元格样式
         /// </summary>
         protected ICellStyle BodyStyle;
@@ -32,7 +27,12 @@ namespace CommonLibrary.ExcelHelper.ExportStyle
         /// <summary>
         /// 创建新样式对象代理
         /// </summary>
-        public Func<ICellStyle> CreateNewStyle { set => _CreateNewStyle = value; }
+        public Func<ICellStyle> CreateNewStyle { set; protected get; }
+
+        /// <summary>
+        /// 创建新格式的代理
+        /// </summary>
+        public Func<string, short> CreateNewDataFormat { set; protected get; }
 
         /// <summary>
         /// 获取数据表内容单元格样式
@@ -46,7 +46,7 @@ namespace CommonLibrary.ExcelHelper.ExportStyle
         {
             if (BodyStyle == null)
             {
-                BodyStyle = _CreateNewStyle();
+                BodyStyle = CreateNewStyle();
                 BodyStyle.BorderBottom = BorderStyle.Thin;
                 BodyStyle.BorderLeft = BorderStyle.Thin;
                 BodyStyle.BorderRight = BorderStyle.Thin;
@@ -76,7 +76,7 @@ namespace CommonLibrary.ExcelHelper.ExportStyle
         {
             if (HeaderStyle == null)
             {
-                HeaderStyle = _CreateNewStyle();
+                HeaderStyle = CreateNewStyle();
                 HeaderStyle.FillPattern = FillPattern.SolidForeground;
                 HeaderStyle.FillForegroundColor = NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index;
                 HeaderStyle.BorderBottom = BorderStyle.Thin;

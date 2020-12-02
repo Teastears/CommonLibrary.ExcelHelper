@@ -74,6 +74,11 @@ namespace CommonLibrary.ExcelHelper.Export
             CreateWorkbook();
             ISheet sheet = Workbook.CreateSheet(SheetName);
             IRow headerRow = sheet.CreateRow(0);
+            if (ExportStyle != null)
+            {
+                ExportStyle.CreateNewStyle = CreateNewStyle;
+                ExportStyle.CreateNewDataFormat = CreateNewDataFormat;
+            }
             for (int i = 0; i < HeaderNames.Count; i++)
             {
                 if (ExportStyle != null)

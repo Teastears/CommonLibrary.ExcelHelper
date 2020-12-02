@@ -96,13 +96,23 @@ namespace CommonLibrary.ExcelHelper.Import
                             }
                             if (string.IsNullOrWhiteSpace(cellvaluestr))
                                 continue;
+                            Type PropertyType;
+
                             if (Property.PropertyType.IsGenericType && Property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
                             {
-                                Property.SetValue(dataRow, Convert.ChangeType(cellvaluestr, Property.PropertyType.GetGenericArguments()[0]));
+                                PropertyType = Property.PropertyType.GetGenericArguments()[0];
                             }
                             else
                             {
-                                Property.SetValue(dataRow, Convert.ChangeType(cellvaluestr, Property.PropertyType));
+                                PropertyType = Property.PropertyType;
+                            }
+                            if (PropertyType == typeof(DateTime))
+                            {
+                                Property.SetValue(dataRow, cell.DateCellValue);
+                            }
+                            else
+                            {
+                                Property.SetValue(dataRow, Convert.ChangeType(cellvaluestr, PropertyType));
                             }
                         }
                     }

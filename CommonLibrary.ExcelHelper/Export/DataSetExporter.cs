@@ -115,6 +115,11 @@ namespace CommonLibrary.ExcelHelper.Export
             InitSheetName();
             InitHeaderNames();
             CreateWorkbook();
+            if (ExportStyle != null)
+            {
+                ExportStyle.CreateNewStyle = CreateNewStyle;
+                ExportStyle.CreateNewDataFormat = CreateNewDataFormat;
+            }
             for (int j = 0; j < HeaderNames.Count; j++)
             {
                 DataTable table = SourceData.Tables[j];

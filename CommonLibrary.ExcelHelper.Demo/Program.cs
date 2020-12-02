@@ -12,15 +12,18 @@ namespace CommonLibrary.ExcelHelper.Demo
         private static DataSet dataSet;
         private static List<Person> list;
         private static List<Transport> list2;
+
         private static void Main()
         {
             CreateDemoData();//创建示例数据
             CreateDemoData2();//创建示例数据
             {//导出示例，数据源是List<T>，并且自定义导出文件的工作表名称，工作表设置样式
                 var helper = ExcelHelperFactory.CreateExporter(list, Enum.ExcelVersion.XLSX, "列表导出测试");
+                var style = new MyStyle(); 
                 //var stream = helper.ExportToStream(new DefaultStyle());//导出到流
-                helper.ExportToFile(@"..\test1.xlsx", new DefaultStyle());//导出到文件
+                helper.ExportToFile(@"..\test1.xlsx", style);//导出到文件
             }
+            
             Thread.Sleep(1000);
             {//导出示例，数据源是List<T>，且类型T是复杂类型。并且自定义导出文件的工作表名称，工作表设置样式
                 var helper = ExcelHelperFactory.CreateExporter(list2, Enum.ExcelVersion.XLSX, "列表导出测试");
@@ -33,7 +36,8 @@ namespace CommonLibrary.ExcelHelper.Demo
                     new KeyValuePair<string, string>("Truck.Brand","车辆品牌"),
                     new KeyValuePair<string, string>("Truck.Load","车辆载重"),
                 };
-                helper.ValueProvidor = (Key, item) => {
+                helper.ValueProvidor = (Key, item) =>
+                {
                     var array = Key.Split('.');
 
                     if (array[0] == "Person")
@@ -116,10 +120,10 @@ namespace CommonLibrary.ExcelHelper.Demo
 
         private static void ShowInConsole_List(List<Person> data)
         {
-            Console.WriteLine("ID\t\tName\t\tIDCard\t\tAge");
+            Console.WriteLine("ID\t\tName\t\tIDCard\t\tAge\t\tBirthday");
             foreach (var item in data)
             {
-                Console.WriteLine($"{item.ID}\t\t{item.Name}\t\t{item.IDCard}\t\t{item.Age}");
+                Console.WriteLine($"{item.ID}\t\t{item.Name}\t\t{item.IDCard}\t\t{item.Age}\t\t{item.Birthday}");
             }
             Console.WriteLine();
             Console.WriteLine();
@@ -128,38 +132,39 @@ namespace CommonLibrary.ExcelHelper.Demo
         private static void CreateDemoData()
         {
             list = new List<Person>() {
-                new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
-                new Person(){  ID=2, Name="张三", IDCard="41050218604173000" },
-                new Person(){  ID=3, Name="张三", IDCard="41050218604173000" },
-                new Person(){  ID=4, Name="张三", IDCard="41050218604173000" },
-                new Person(){  ID=5, Name="张三", IDCard="41050218604173000" },
+                new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=31, Birthday=new DateTime(1989,5,12) },
+                new Person(){  ID=2, Name="张三", IDCard="41050218604173000" , Birthday=new DateTime(1989,5,12) },
+                new Person(){  ID=3, Name="张三", IDCard="41050218604173000" , Birthday=new DateTime(1989,5,12) },
+                new Person(){  ID=4, Name="张三", IDCard="41050218604173000"  , Birthday=new DateTime(1989,5,12)},
+                new Person(){  ID=5, Name="张三", IDCard="41050218604173000" , Birthday=new DateTime(1989,5,12)},
             };
 
             dataSet = new DataSet();
             CreatTableWithData(5);
             CreatTableWithData(10);
         }
+
         private static void CreateDemoData2()
         {
             list2 = new List<Transport>() {
                 new Transport(){
-                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
+                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=31  , Birthday=new DateTime(1989,5,12)},
                     Truck=new Truck(){ ID=1, Brand="奔驰", Load="50吨" }
                 },
                 new Transport(){
-                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
+                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=31  , Birthday=new DateTime(1989,5,12) },
                     Truck=new Truck(){ ID=1, Brand="奔驰", Load="50吨" }
                 },
                 new Transport(){
-                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
+                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=31  , Birthday=new DateTime(1989,5,12) },
                     Truck=new Truck(){ ID=1, Brand="奔驰", Load="50吨" }
                 },
                 new Transport(){
-                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
+                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=31  , Birthday=new DateTime(1989,5,12) },
                     Truck=new Truck(){ ID=1, Brand="奔驰", Load="50吨" }
                 },
                 new Transport(){
-                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=10 },
+                    Driver=new Person(){  ID=1, Name="张三", IDCard="41050218604173000",Age=31  , Birthday=new DateTime(1989,5,12) },
                     Truck=new Truck(){ ID=1, Brand="奔驰", Load="50吨" }
                 }
             };
@@ -168,6 +173,7 @@ namespace CommonLibrary.ExcelHelper.Demo
             CreatTableWithData(5);
             CreatTableWithData(10);
         }
+
         private static void CreatTableWithData(int count)
         {
             DataTable table = new DataTable();
@@ -215,6 +221,8 @@ namespace CommonLibrary.ExcelHelper.Demo
         public string Name { get; set; }
 
         public string IDCard { get; set; }
+
+        public DateTime Birthday { get; set; }
 
         public int? Age { get; set; }
     }

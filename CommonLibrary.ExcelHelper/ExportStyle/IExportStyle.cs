@@ -14,6 +14,11 @@ namespace CommonLibrary.ExcelHelper.ExportStyle
         Func<ICellStyle> CreateNewStyle { set; }
 
         /// <summary>
+        /// 创建新格式的代理
+        /// </summary>
+        Func<string, short> CreateNewDataFormat { set; }
+
+        /// <summary>
         /// 获取数据表内容单元格样式
         /// </summary>
         /// <param name="SheetIndex">工作表索引号，从0开始</param>
