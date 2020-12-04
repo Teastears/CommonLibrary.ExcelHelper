@@ -115,6 +115,7 @@ namespace CommonLibrary.ExcelHelper.Export
             InitSheetName();
             InitHeaderNames();
             CreateWorkbook();
+            DefaultCellStyle = CreateNewStyle();
             if (ExportStyle != null)
             {
                 ExportStyle.CreateNewStyle = CreateNewStyle;
@@ -125,6 +126,8 @@ namespace CommonLibrary.ExcelHelper.Export
                 DataTable table = SourceData.Tables[j];
                 ISheet sheet = Workbook.CreateSheet(SheetName[j]);
                 IRow headerRow = sheet.CreateRow(0);
+                if (ExportStyle != null)
+                    headerRow.HeightInPoints = ExportStyle.GetRowHeigth(0, 0);
                 var SubHeaderNames = HeaderNames[j].Value;
                 for (int i = 0; i < SubHeaderNames.Count; i++)
                 {
@@ -134,17 +137,23 @@ namespace CommonLibrary.ExcelHelper.Export
                     cell.SetCellValue(SubHeaderNames[i].Value);
                     if (ExportStyle != null)
                         cell.CellStyle = ExportStyle.GetHeaderStyle(j, i);
+                    else
+                        cell.CellStyle = DefaultCellStyle;
                 }
                 int rowIndex = 1;
                 foreach (DataRow row in table.Rows)
                 {
                     IRow dataRow = sheet.CreateRow(rowIndex);
+                    if (ExportStyle != null)
+                        dataRow.HeightInPoints = ExportStyle.GetRowHeigth(0, rowIndex);
                     for (int n = 0; n < SubHeaderNames.Count; n++)
                     {
                         var cell = dataRow.CreateCell(n);
                         SetCellValue(cell, row[SubHeaderNames[n].Key]);
                         if (ExportStyle != null)
                             cell.CellStyle = ExportStyle.GetCellStyle(j, n, rowIndex - 1);
+                        else
+                            cell.CellStyle = DefaultCellStyle;
                     }
                     rowIndex++;
                 }

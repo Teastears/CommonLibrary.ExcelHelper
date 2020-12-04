@@ -82,28 +82,34 @@ namespace CommonLibrary.ExcelHelper.Export
             if (ValueProvidor == null)
                 ValueProvidor = DefaultValueProvidor;
             CreateWorkbook();
+            DefaultCellStyle = CreateNewStyle(); 
+            ISheet sheet = Workbook.CreateSheet(SheetName);
+            IRow HeaderRow = sheet.CreateRow(0);
             if (ExportStyle != null)
             {
+                HeaderRow.HeightInPoints = ExportStyle.GetRowHeigth(0, 0);
                 ExportStyle.CreateNewStyle = CreateNewStyle;
-                ExportStyle.CreateNewDataFormat = CreateNewDataFormat;
+                ExportStyle.CreateNewDataFormat = CreateNewDataFormat;                
             }
-            ISheet sheet = Workbook.CreateSheet(SheetName);
-            IRow headerRow = sheet.CreateRow(0);
-
+           
             for (int i = 0; i < HeaderNames.Count; i++)
             {
                 if (ExportStyle != null)
                     sheet.SetColumnWidth(i, ExcelBase.ColumnWidth(ExportStyle.GetColumnWidth(0, i)));
-                ICell cell = headerRow.CreateCell(i);
+                ICell cell = HeaderRow.CreateCell(i);
                 cell.SetCellValue(HeaderNames[i].Value);
                 if (ExportStyle != null)
                     cell.CellStyle = ExportStyle.GetHeaderStyle(0, i);
+                else
+                    cell.CellStyle = DefaultCellStyle;
             }
 
             int rowIndex = 1;
             foreach (T item in SourceData)
             {
                 IRow dataRow = sheet.CreateRow(rowIndex);
+                if (ExportStyle != null)
+                    dataRow.HeightInPoints = ExportStyle.GetRowHeigth(0, rowIndex);
                 for (int n = 0; n < HeaderNames.Count; n++)
                 {
                     object pValue = ValueProvidor(HeaderNames[n].Key, item);
@@ -111,6 +117,8 @@ namespace CommonLibrary.ExcelHelper.Export
                     SetCellValue(cell, pValue);
                     if (ExportStyle != null)
                         cell.CellStyle = ExportStyle.GetCellStyle(0, n, rowIndex - 1);
+                    else
+                        cell.CellStyle = DefaultCellStyle;
                 }
                 rowIndex++;
             }

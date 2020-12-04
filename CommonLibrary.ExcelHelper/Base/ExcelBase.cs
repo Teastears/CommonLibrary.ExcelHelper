@@ -14,7 +14,7 @@ namespace CommonLibrary.ExcelHelper.Base
         public static int ColumnWidth(int Width)
         {
             return Width * 256 + 200;
-        }
+        } 
 
         /// <summary>
         /// 判断是否为2007以前格式

@@ -17,6 +17,11 @@ namespace CommonLibrary.ExcelHelper.Export
     public abstract class AbstractExcelExporter : IExcelExporter
     {
         /// <summary>
+        /// 默认单元格样式
+        /// </summary>
+        protected ICellStyle DefaultCellStyle;
+
+        /// <summary>
         /// 工作簿
         /// </summary>
         protected IWorkbook Workbook;

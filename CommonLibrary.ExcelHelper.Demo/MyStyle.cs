@@ -5,16 +5,14 @@ using System.Collections.Generic;
 
 namespace CommonLibrary.ExcelHelper.Demo
 {
-    internal class MyStyle : IExportStyle
+    internal class MyStyle : AbstractStyle
     {
         protected bool IsInit = false;
         protected ICellStyle DefaultBodyStyle;
 
         protected ICellStyle BodyStyle_Date;
 
-        protected ICellStyle HeaderStyle;
-        public Func<ICellStyle> CreateNewStyle { set; protected get; }
-        public Func<string, short> CreateNewDataFormat { set; protected get; }
+        protected ICellStyle HeaderStyle; 
 
         protected void Init()
         {
@@ -35,7 +33,7 @@ namespace CommonLibrary.ExcelHelper.Demo
             BodyStyle_Date.DataFormat = CreateNewDataFormat("yyyy年m月d日"); 
         }
 
-        public ICellStyle GetCellStyle(int SheetIndex, int ColumnIndex, int RowIndex)
+        public override ICellStyle GetCellStyle(int SheetIndex, int ColumnIndex, int RowIndex)
         {
             Init();
             switch (ColumnIndex)
@@ -46,7 +44,7 @@ namespace CommonLibrary.ExcelHelper.Demo
             } 
         }
 
-        public int GetColumnWidth(int SheetIndex, int ColumnIndex)
+        public override int GetColumnWidth(int SheetIndex, int ColumnIndex)
         {
             switch (ColumnIndex)
             {
@@ -56,7 +54,7 @@ namespace CommonLibrary.ExcelHelper.Demo
             }
         }
 
-        public ICellStyle GetHeaderStyle(int SheetIndex, int ColumnIndex)
+        public override ICellStyle GetHeaderStyle(int SheetIndex, int ColumnIndex)
         {
             if (HeaderStyle == null)
             {
@@ -69,6 +67,6 @@ namespace CommonLibrary.ExcelHelper.Demo
                 HeaderStyle.BorderTop = BorderStyle.Thin;
             }
             return HeaderStyle;
-        }
+        } 
     }
 }

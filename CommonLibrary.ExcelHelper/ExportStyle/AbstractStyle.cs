@@ -4,19 +4,26 @@ using System;
 namespace CommonLibrary.ExcelHelper.ExportStyle
 {
     /// <summary>
-    /// 导出样式
+    /// 默认样式
     /// </summary>
-    public interface IExportStyle
+    /// <remarks>
+    /// <para>此默认样式</para>
+    /// <para>所有列宽均为8字符宽度</para>
+    /// <para>所有行高为14.75</para> 
+    /// </remarks>
+    public abstract class AbstractStyle : IExportStyle
     {
+ 
+
         /// <summary>
         /// 创建新样式对象代理
         /// </summary>
-        Func<ICellStyle> CreateNewStyle { set; }
+        public Func<ICellStyle> CreateNewStyle { set; protected get; }
 
         /// <summary>
         /// 创建新格式的代理
         /// </summary>
-        Func<string, short> CreateNewDataFormat { set; }
+        public Func<string, short> CreateNewDataFormat { set; protected get; }
 
         /// <summary>
         /// 获取数据表内容单元格样式
@@ -26,7 +33,10 @@ namespace CommonLibrary.ExcelHelper.ExportStyle
         /// <param name="RowIndex">行号，从0开始</param>
         /// <returns></returns>
         /// <remarks>不包括表头，计算行号时也不计算表头</remarks>
-        ICellStyle GetCellStyle(int SheetIndex, int ColumnIndex, int RowIndex);
+        public virtual ICellStyle GetCellStyle(int SheetIndex, int ColumnIndex, int RowIndex)
+        {
+            return null;
+        }
 
         /// <summary>
         /// 获取列宽
@@ -34,15 +44,10 @@ namespace CommonLibrary.ExcelHelper.ExportStyle
         /// <param name="SheetIndex">工作表索引号，从0开始</param>
         /// <param name="ColumnIndex">列索引号，从0开始</param>
         /// <returns>字符数量</returns>
-        int GetColumnWidth(int SheetIndex, int ColumnIndex);
-
-        /// <summary>
-        /// 获取行高
-        /// </summary>
-        /// <param name="SheetIndex">工作表索引号，从0开始</param>
-        /// <param name="RowIndex">行号，从0开始</param>
-        /// <returns></returns>
-        float GetRowHeigth(int SheetIndex, int RowIndex);
+        public virtual int GetColumnWidth(int SheetIndex, int ColumnIndex)
+        {
+            return 8;
+        }
 
         /// <summary>
         /// 获取数据表表头单元格样式
@@ -50,6 +55,19 @@ namespace CommonLibrary.ExcelHelper.ExportStyle
         /// <param name="SheetIndex">工作表索引号，从0开始</param>
         /// <param name="ColumnIndex">列索引号，从0开始</param>
         /// <returns></returns>
-        ICellStyle GetHeaderStyle(int SheetIndex, int ColumnIndex);
+        public virtual ICellStyle GetHeaderStyle(int SheetIndex, int ColumnIndex)
+        {
+            return null;
+        }
+        /// <summary>
+        /// 获取行高
+        /// </summary>
+        /// <param name="SheetIndex">工作表索引号，从0开始</param>
+        /// <param name="RowIndex">行号，从0开始</param>
+        /// <returns></returns>
+        public virtual float GetRowHeigth(int SheetIndex, int RowIndex)
+        {
+            return 14.25F;
+        }
     }
 }

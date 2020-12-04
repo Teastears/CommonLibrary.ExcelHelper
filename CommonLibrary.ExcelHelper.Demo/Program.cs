@@ -17,7 +17,8 @@ namespace CommonLibrary.ExcelHelper.Demo
         {
             CreateDemoData();//创建示例数据
             CreateDemoData2();//创建示例数据
-            {//导出示例，数据源是List<T>，并且自定义导出文件的工作表名称，工作表设置样式
+            {
+                //导出示例，数据源是List<T>，并且自定义导出文件的工作表名称，工作表设置样式
                 var helper = ExcelHelperFactory.CreateExporter(list, Enum.ExcelVersion.XLSX, "列表导出测试");
                 var style = new MyStyle(); 
                 //var stream = helper.ExportToStream(new DefaultStyle());//导出到流
@@ -25,7 +26,8 @@ namespace CommonLibrary.ExcelHelper.Demo
             }
             
             Thread.Sleep(1000);
-            {//导出示例，数据源是List<T>，且类型T是复杂类型。并且自定义导出文件的工作表名称，工作表设置样式
+            {
+                //导出示例，数据源是List<T>，且类型T是复杂类型。并且自定义导出文件的工作表名称，工作表设置样式
                 var helper = ExcelHelperFactory.CreateExporter(list2, Enum.ExcelVersion.XLSX, "列表导出测试");
                 helper.HeaderNames = new List<KeyValuePair<string, string>>() {
                     new KeyValuePair<string, string>("Person.ID","司机编号"),
@@ -59,31 +61,36 @@ namespace CommonLibrary.ExcelHelper.Demo
                 helper.ExportToFile(@"..\test1_1.xlsx", new DefaultStyle());//导出到文件
             }
             Thread.Sleep(1000);
-            {//导出示例，数据源是DataSet
+            {
+                //导出示例，数据源是DataSet
                 var helper = ExcelHelperFactory.CreateExporter(dataSet);
                 //var stream = helper.ExportToStream();//导出到流
                 helper.ExportToFile(@"..\test2.xlsx");//导出到文件
             }
             Thread.Sleep(1000);
-            {//导出示例，数据源是DataTable
+            {
+                //导出示例，数据源是DataTable
                 var helper = ExcelHelperFactory.CreateExporter(dataSet.Tables[0]);
                 //var stream = helper.ExportToStream();//导出到流
                 helper.ExportToFile(@"..\test3.xlsx");//导出到文件
             }
             Thread.Sleep(1000);
-            {//导入示例，导入数据生成List<T>
+            {
+                //导入示例，导入数据生成List<T>
                 var helper = ExcelHelperFactory.CreateImporter(@"..\test1.xlsx");
                 var data = helper.Import<Person>();
                 ShowInConsole_List(data);
             }
             Thread.Sleep(1000);
-            {//导入示例，导入数据生成DataSet
+            {
+                //导入示例，导入数据生成DataSet
                 var helper = ExcelHelperFactory.CreateImporter(@"..\test2.xlsx");
                 var data = helper.Import();
                 ShowInConsole_DataSet(data);
             }
             Thread.Sleep(1000);
-            {//导入示例，导入数据生成List<T>,且只导入多个工作表中的指定的一个
+            {
+                //导入示例，导入数据生成List<T>,且只导入多个工作表中的指定的一个
                 List<ImportSheetSetting> ImportSheets = new List<ImportSheetSetting>() {
                     new ImportSheetSetting(1,0)
                 };

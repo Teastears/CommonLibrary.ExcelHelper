@@ -73,9 +73,11 @@ namespace CommonLibrary.ExcelHelper.Export
             InitHeaderNames();
             CreateWorkbook();
             ISheet sheet = Workbook.CreateSheet(SheetName);
-            IRow headerRow = sheet.CreateRow(0);
+            DefaultCellStyle = CreateNewStyle();
+            IRow HeaderRow = sheet.CreateRow(0);
             if (ExportStyle != null)
             {
+                HeaderRow.HeightInPoints = ExportStyle.GetRowHeigth(0, 0);
                 ExportStyle.CreateNewStyle = CreateNewStyle;
                 ExportStyle.CreateNewDataFormat = CreateNewDataFormat;
             }
@@ -83,21 +85,27 @@ namespace CommonLibrary.ExcelHelper.Export
             {
                 if (ExportStyle != null)
                     sheet.SetColumnWidth(i, ExcelBase.ColumnWidth(ExportStyle.GetColumnWidth(0, i)));
-                ICell cell = headerRow.CreateCell(i);
+                ICell cell = HeaderRow.CreateCell(i);
                 cell.SetCellValue(HeaderNames[i].Value);
                 if (ExportStyle != null)
                     cell.CellStyle = ExportStyle.GetHeaderStyle(0, i);
+                else
+                    cell.CellStyle = DefaultCellStyle;
             }
             int rowIndex = 1;
             foreach (DataRow row in SourceData.Rows)
             {
                 IRow dataRow = sheet.CreateRow(rowIndex);
+                if (ExportStyle != null)
+                    dataRow.HeightInPoints = ExportStyle.GetRowHeigth(0, rowIndex);
                 for (int n = 0; n < HeaderNames.Count; n++)
                 {
                     var cell = dataRow.CreateCell(n);
                     SetCellValue(cell, row[HeaderNames[n].Key]);
                     if (ExportStyle != null)
                         cell.CellStyle = ExportStyle.GetCellStyle(0, n, rowIndex - 1);
+                    else
+                        cell.CellStyle = DefaultCellStyle;
                 }
                 rowIndex++;
             }
