@@ -156,30 +156,33 @@ namespace CommonLibrary.ExcelHelper.Import
                 IRow row = sheet.GetRow(i);
                 if (row != null)
                 {
-                    DataRow dataRow = table.NewRow();
-                    for (int j = row.FirstCellNum; j < cellCount; j++)
+                    if (row.Cells.Count > 0)
                     {
-                        var cell = row.GetCell(j);
-                        if (cell != null)
+                        DataRow dataRow = table.NewRow();
+                        for (int j = row.FirstCellNum; j < cellCount; j++)
                         {
-                            if (cell.CellType == CellType.Numeric)
+                            var cell = row.GetCell(j);
+                            if (cell != null)
                             {
-                                if (DateUtil.IsCellDateFormatted(cell))
+                                if (cell.CellType == CellType.Numeric)
                                 {
-                                    dataRow[j] = DateTime.FromOADate(cell.NumericCellValue);
+                                    if (DateUtil.IsCellDateFormatted(cell))
+                                    {
+                                        dataRow[j] = DateTime.FromOADate(cell.NumericCellValue);
+                                    }
+                                    else
+                                    {
+                                        dataRow[j] = cell.NumericCellValue;
+                                    }
                                 }
                                 else
                                 {
-                                    dataRow[j] = cell.NumericCellValue;
+                                    dataRow[j] = cell.StringCellValue;
                                 }
                             }
-                            else
-                            {
-                                dataRow[j] = cell.StringCellValue;
-                            }
                         }
+                        table.Rows.Add(dataRow);
                     }
-                    table.Rows.Add(dataRow);
                 }
             }
 
