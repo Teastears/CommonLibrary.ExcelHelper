@@ -116,6 +116,7 @@ namespace CommonLibrary.ExcelHelper.Export
             Workbook.Write(Stream);
             Workbook.Close();
             Stream.AllowClose = true;
+            Stream.Position = 0;
             return Stream;
         }
     }
